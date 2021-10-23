@@ -47,6 +47,25 @@ nyc_scores_2 %>%
   summarize(median = median(Average_Score_SAT_Math), 
             mean = mean(Average_Score_SAT_Math))
 
+# Load agricolae
+library(agricolae)
+
+# Design a LS with 5 treatments A:E then look at the sketch
+treat <- LETTERS[1:5]
+my_design_lsd <- design.lsd(treat, seed = 42)
+
+my_design_lsd$sketch
+
+# Build nyc_scores_ls_lm
+nyc_scores_ls_lm <- lm(Average_Score_SAT_Math ~ Tutoring_Program + Borough + Teacher_Education_Level,
+                       data = nyc_scores_ls )
+
+# Tidy the results with broom
+tidy(nyc_scores_ls_lm)
+
+# Examine the results with anova
+anova(nyc_scores_ls_lm)
+
 ###############################################################
 
 # 2. Graeco-Latin squares
